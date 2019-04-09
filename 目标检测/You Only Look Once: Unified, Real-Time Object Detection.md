@@ -30,17 +30,17 @@
 
 其中
 
-​	S: grid cell, 等于 7 (每个 cell 负责检测中心落在这个 cell 上的物体)
+- S: grid cell, 等于 7 (每个 cell 负责检测中心落在这个 cell 上的物体)
 
-​	5: 表示 x y w h confidence 5个参数，负责预测目标选框 x y w h 以及 是否是物体
+- 5: 表示 x y w h confidence 5个参数，负责预测目标选框 x y w h 以及 是否是物体
 
-​		此处的 x y 是按照 cell 大小映射到 [0,1] 的
+  - 此处的 x y 是按照 cell 大小映射到 [0,1] 的
 
-​		w y 是按照整幅图 w, h 同样映射到 [0, 1] 区间 
+  - w y 是按照整幅图 w, h 同样映射到 [0, 1] 区间 
 
-​	B: 取2，表示每个 cell 预测的物体个数
+- B: 取2，表示每个 cell 预测的物体个数
 
-​	C: 预测物体类别
+- C: 预测物体类别
 
 
 
@@ -48,7 +48,7 @@
 
 ### 3.2 YOLO 检测流程
 
-![YOLO](images/YOLO Detect.png)
+![YOLO](https://github.com/guruL/Read-Deep-Learning-Paper-In-Chinese/blob/master/%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B/images/YOLO%20Detect.png)
 
 - 将图片输入 YOLO 的网络后，最后输出会是一个 7 * 7 * 30 的特征
 - 其中 7 * 7 对应了原始图片中 7 * 7 个分区
@@ -78,7 +78,7 @@
 
 ## 4 总结
 
-![对比试验](/Users/L/Read-Deep-Learning-Paper-In-Chinese/目标检测/images/YOLO compare.png)
+![对比试验](https://github.com/guruL/Read-Deep-Learning-Paper-In-Chinese/blob/master/%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B/images/YOLO%20compare.png)
 
 可以看到，YOLO提出时，快速算法中 YOLO 是没有对手的，但相比较于 Faster R-CNN 也还有差距。作者自己手撸了一个 backbone，在 ImageNet 上的 top-5 是 88 %，低于 VGG-16，所以光是改改 backbone，应该也能对最后的 mAP 有提升。大神脑回路清奇主要就体现在这，用 VGG-16 GoogLeNet 就是不用，自己手撸一个来搞。
 
