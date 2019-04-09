@@ -16,7 +16,7 @@
 ## 3. 模型及基本思想
 ### 3.1 YOLO 模型
 
-![YOLO Network](images/YOLO Network.png)
+![YOLO Network](https://github.com/guruL/Read-Deep-Learning-Paper-In-Chinese/blob/master/%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B/images/YOLO%20Network.png)
 
 包含 24 个卷积层和 2 个全连接层
 
@@ -64,7 +64,7 @@
 4. 激活函数除最后一层均使用 leaky-ReLU
 5. 由于是回归问题，因此直接采用均方误差来进行训练
 
-![YOLO](images/YOLO Loss.png)
+![YOLO](https://github.com/guruL/Read-Deep-Learning-Paper-In-Chinese/blob/master/%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B/images/YOLO%20Loss.png)
 
 
 
