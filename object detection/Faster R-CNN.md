@@ -4,7 +4,7 @@
 
 
 
-![](../images/Faster R-CNN Network.png)
+![](../images/Faster RCNN Network.png)
 
 
 
@@ -21,7 +21,7 @@
 
 下图为具体的 Faster R-CNN 网络：
 
-![](../images/Concrete Faster R-CNN.png) 
+![](../images/Concrete Faster RCNN.png) 
 
 
 
