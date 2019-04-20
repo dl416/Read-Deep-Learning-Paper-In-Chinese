@@ -4,7 +4,7 @@
 
 
 
-​					![](../images/FRNN.png)
+​					![](./images/FRNN.png)
 
 
 
@@ -21,7 +21,7 @@
 
 下图为具体的 Faster R-CNN 网络：
 
-​	![](../images/FRNN1.png) 
+​	![](./images/FRNN1.png) 
 
 
 
@@ -59,7 +59,7 @@ Faster RCNN 抛弃了传统的滑动窗口（Sliding Window）和 Selective Sear
 
 下图展示了 RPN 网络的具体构成：
 
-​				![](../images/RPN.png)
+​				![](./images/RPN.png)
 
 
 
@@ -80,7 +80,7 @@ anchors 机制，简而言之，就是针对 feature maps 中的每个位置，�
 
 
 
-​								![](../images/Anchor.png)
+​								![](./images/Anchor.png)
 
 
 
@@ -92,7 +92,7 @@ anchors 机制，简而言之，就是针对 feature maps 中的每个位置，�
 
 
 
-​						![](../images/Concrete%20RPN.png)
+​						![](./images/Concrete%20RPN.png)
 
 
 
@@ -104,7 +104,7 @@ anchors 机制，简而言之，就是针对 feature maps 中的每个位置，�
 
 
 
-​				![](../images/Concrete%20Anchor.png)
+​				![](./images/Concrete%20Anchor.png)
 
 
 
@@ -118,7 +118,7 @@ anchors 机制，简而言之，就是针对 feature maps 中的每个位置，�
 
 
 
-​				![](../images/Softmax.png)
+​				![](./images/Softmax.png)
 
 
 
@@ -159,58 +159,58 @@ anchors，也就相当于初步提取了检测目标候选区域 box
 
 
 
-​							![](../images/Ground%20Truth.png)
+​							![](./images/Ground%20Truth.png)
 
 
 
-对于窗口一般使用四维向量 ![](../images/Coordinate1.png) 表示，分别表示窗口的中心点坐标和宽高。对于下图，红色的框 `A` 代表原始的 foreground anchors，绿色的框 `G` 代表目标的 GT，现在的目标是寻找一种关系，使得输入原始的 anchor `A` 经过映射得到一个跟真实窗口 `G` 更接近的回归窗口 `G'`，即：
+对于窗口一般使用四维向量 ![](./images/Coordinate1.png) 表示，分别表示窗口的中心点坐标和宽高。对于下图，红色的框 `A` 代表原始的 foreground anchors，绿色的框 `G` 代表目标的 GT，现在的目标是寻找一种关系，使得输入原始的 anchor `A` 经过映射得到一个跟真实窗口 `G` 更接近的回归窗口 `G'`，即：
 
-- 给定：anchor ![](../images/Coordinate2.png) 和 ![](../images/Coordinate3.png) 
-- 寻找一种变换 ![](../images/Coordinate4.png)，使得：![](../images/Coordinate5.png)，其中![](../images/Coordinate6.png) 
+- 给定：anchor ![](./images/Coordinate2.png) 和 ![](./images/Coordinate3.png) 
+- 寻找一种变换 ![](./images/Coordinate4.png)，使得：![](./images/Coordinate5.png)，其中![](./images/Coordinate6.png) 
 
 
 
-​							![](../images/box.png)
+​							![](./images/box.png)
 
-那么经过何种变换![](../images/Coordinate4.png)才能从图中的 `A` 变为 `G'` 呢？比较简单的思路就是:
+那么经过何种变换![](./images/Coordinate4.png)才能从图中的 `A` 变为 `G'` 呢？比较简单的思路就是:
 
 - 先做平移
 
   
 
-  ​			![](../images/Coordinate7.png)  
+  ​			![](./images/Coordinate7.png)  
 
 - 再做缩放
 
-  ​			![](../images/Coordinate8.png) 
+  ​			![](./images/Coordinate8.png) 
 
 
 
-观察上面 4 个公式发现，需要学习的是 ![](../images/Coordinate9.png) 这四个变换。当输入的 anchor `A` 与 GT 相差较小时，可以认为这种变换是一种线性变换， 那么就可以用线性回归来建模对窗口进行微调（（注意，只有当 `A` 和 GT 比较接近时，才能使用线性回归模型，否则就是复杂的非线性问题了）。
+观察上面 4 个公式发现，需要学习的是 ![](./images/Coordinate9.png) 这四个变换。当输入的 anchor `A` 与 GT 相差较小时，可以认为这种变换是一种线性变换， 那么就可以用线性回归来建模对窗口进行微调（（注意，只有当 `A` 和 GT 比较接近时，才能使用线性回归模型，否则就是复杂的非线性问题了）。
 
 
 
-接下来的问题就是如何通过线性回归获得这四个值（线性回归就是：给定输入的特征向量 ![](../images/Coordinate10.png)，学习一组参数 ![](../images/Coordinate11.png), 使得经过线性回归后的值跟真实值 ![](../images/Coordinate12.png)非常接近，即![](../images/Coordinate13.png)。对于该问题，输入是 feature map，定义为 ![](../images/Coordinate14.png)；同时还有训练传入 `A` 与 GT 之间的变换量，即![](../images/Coordinate15.png)。输出是![](../images/Coordinate9.png)四个变换。那么目标函数可以表示为：
+接下来的问题就是如何通过线性回归获得这四个值（线性回归就是：给定输入的特征向量 ![](./images/Coordinate10.png)，学习一组参数 ![](./images/Coordinate11.png), 使得经过线性回归后的值跟真实值 ![](./images/Coordinate12.png)非常接近，即![](images/Coordinate13.png)。对于该问题，输入是 feature map，定义为 ![](./images/Coordinate14.png)；同时还有训练传入 `A` 与 GT 之间的变换量，即![](./images/Coordinate15.png)。输出是![](./images/Coordinate9.png)四个变换。那么目标函数可以表示为：
 
-​				![](../images/Coordinate16.png) 
+​				![](./images/Coordinate16.png) 
 
-其中 ![](../images/Coordinate17.png) 是对应 anchor 的 feature map 组成的特征向量， ![](../images/Coordinate18.png) 是需要学习的参数， ![](../images/Coordinate19.png) 是得到的预测值（表示  `x`，`y`，`w`，`h`，也就是每一个变换对应一个上述目标函数）。为了让预测值 ![](../images/Coordinate19.png) 与真实值 ![](../images/Coordinate20.png) 差距最小，设计损失函数：
+其中 ![](./images/Coordinate17.png) 是对应 anchor 的 feature map 组成的特征向量， ![](./images/Coordinate18.png) 是需要学习的参数， ![](./images/Coordinate19.png) 是得到的预测值（表示  `x`，`y`，`w`，`h`，也就是每一个变换对应一个上述目标函数）。为了让预测值 ![](./images/Coordinate19.png) 与真实值 ![](./images/Coordinate20.png) 差距最小，设计损失函数：
 
-​				![](../images/Coordinate21.png) 
+​				![](./images/Coordinate21.png) 
 
 函数优化目标为：
 
-​		![](../images/Coordinate22.png) 
+​		![](./images/Coordinate22.png) 
 
 需要说明，只有在 GT 与需要回归框位置比较接近时，才可近似认为上述线性变换成立。
 
 
 
-说完 bounding box regression 原理，对应于 Faster RCNN 原文，foreground anchor 与 ground truth 之间的平移量 ![](../images/Coordinate23.png) 与尺度因子 ![](../images/Coordinate24.png) 的转换关系为：
+说完 bounding box regression 原理，对应于 Faster RCNN 原文，foreground anchor 与 ground truth 之间的平移量 ![](./images/Coordinate23.png) 与尺度因子 ![](./images/Coordinate24.png) 的转换关系为：
 
-​		![](../images/Coordinate25.png) 
+​		![](./images/Coordinate25.png) 
 
-对于训练 bouding box regression 网络回归分支，输入是 feature map ![](../images/Coordinate14.png)，监督信号是 anchor 与 GT 的差距 ![](../images/Coordinate15.png)，即训练目标是：输入 ![](../images/Coordinate14.png)的情况下，使网络输出与监督信号尽可能接近。那么当 bouding box regression 工作时，再输入![](../images/Coordinate14.png)时，回归网络分支的输出就是每个 anchor 的平移量和变换尺度 ![](../images/Coordinate15.png)，显然可以用来修正 anchor 位置。
+对于训练 bouding box regression 网络回归分支，输入是 feature map ![](./images/Coordinate14.png)，监督信号是 anchor 与 GT 的差距 ![](./images/Coordinate15.png)，即训练目标是：输入 ![](./images/Coordinate14.png)的情况下，使网络输出与监督信号尽可能接近。那么当 bouding box regression 工作时，再输入![](./images/Coordinate14.png)时，回归网络分支的输出就是每个 anchor 的平移量和变换尺度 ![](./images/Coordinate15.png)，显然可以用来修正 anchor 位置。
 
 
 
@@ -218,7 +218,7 @@ anchors，也就相当于初步提取了检测目标候选区域 box
 
 对于 RPN 网络的下面一条线路而言：
 
-​		![](../images/RPN%20bottom.png)
+​		![](./images/RPN%20bottom.png)
 
 
 
@@ -247,7 +247,7 @@ layer {
 
 ### 2.5 proposal layer
 
-其主要负责汇总所有的![](../images/Coordinate9.png)交换量和 foreground anchors。计算出精准的 proposals，以便送入后续的 RoI pooling layer。
+其主要负责汇总所有的![](./images/Coordinate9.png)交换量和 foreground anchors。计算出精准的 proposals，以便送入后续的 RoI pooling layer。
 
 
 
@@ -285,7 +285,7 @@ Faster RCNN 前首先 reshape 到固定 `MxN`，`im_info=[M, N, scale_factor]`
 
 proposal layer forward 按照以下顺序依次处理：
 
-1. 生成 anchors，利用![](../images/Coordinate26.png)对所有的 anchors 做 bbox regression 回归
+1. 生成 anchors，利用![](./images/Coordinate26.png)对所有的 anchors 做 bbox regression 回归
 2. 按照输入的 foreground softmax scores 由大到小排序 anchors，提取前 `pre_nms_topN`（例如 `6000`）个 anchors，即提取修正位置后的 foreground anchors
 3. 限定超出图像边界的 foreground anchors 为图像边界（防止后续 RoI pooling 时 proposal 超出图像边界）
 4. 剔除非常小（`width<threshold` 或 `height<threshold`）的 foreground anchors
@@ -294,7 +294,7 @@ proposal layer forward 按照以下顺序依次处理：
 
 
 
-之后输出 ![](../images/Coordinate27.png)。注意，由于在第 3 步中将 anchors 映射回原图判断是否超出边界，所以这里输出的 proposals 是对应 `MxN` 输入图像尺度的，这点在后续网络中有用。严格意义上将，检测应该到此就结束了，后续部分应该属于识别。
+之后输出 ![](./images/Coordinate27.png)。注意，由于在第 3 步中将 anchors 映射回原图判断是否超出边界，所以这里输出的 proposals 是对应 `MxN` 输入图像尺度的，这点在后续网络中有用。严格意义上将，检测应该到此就结束了，后续部分应该属于识别。
 
 
 
@@ -320,7 +320,7 @@ RoI pooling 层主要负责收集 proposals，并计算出 proposal feature maps
 
 
 
-​		![](../images/Crop.png)
+​		![](./images/Crop.png)
 
 
 
@@ -366,7 +366,7 @@ RoI pooling forward 过程为：
 
 这样处理后，即使大小不同的 proposals 输出结果都是 `pooled_w × pooled_h` 固定大小，实现了固定长度输出。
 
-​			![](../images/Proposals.png)
+​			![](./images/Proposals.png)
 
 
 
@@ -378,7 +378,7 @@ classification 部分利用已经获得的 proposal feature maps，通过 fc lay
 
 分类部分网络结构如下图所示：
 
-​		![](../images/Classification.png)
+​		![](./images/Classification.png)
 
 从 PoI pooling 获取到 `7x7=49` 大小的 proposal feature maps 后，送入后续网络，接着进行如下两个步骤：
 
