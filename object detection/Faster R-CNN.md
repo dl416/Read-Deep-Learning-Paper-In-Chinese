@@ -136,7 +136,10 @@ layer {
   }
 }
 '''
-可以看到其 `num_output=18`，也就是经过该卷积的输出图像为 `WxHx18` 大小。这也就刚好对应了 feature maps 每一个点都有 `9` 个 anchors，同时每个 anchors 又有可能是 foreground 和 background，所有这些信息都保存 `WxHx(9*2)` 大小的矩阵。这么做的原因是：后面接 softmax 分类获得 foreground anchors，也就相当于初步提取了检测目标候选区域 box
+可以看到其 `num_output=18`，也就是经过该卷积的输出图像为 `WxHx18` 大小。这也就刚好对应了 feature 
+maps 每一个点都有 `9` 个 anchors，同时每个 anchors 又有可能是 foreground 和 background，所有
+这些信息都保存 `WxHx(9*2)` 大小的矩阵。这么做的原因是：后面接 softmax 分类获得 foreground 
+anchors，也就相当于初步提取了检测目标候选区域 box
 '''
 ```
 
@@ -234,7 +237,9 @@ layer {
 }
 
 '''
-可以看到其 `num_output=36`，即经过该卷积输出图像为 `WxHx36`，在 caffe blob存储为 `[1, 4x9, H, W]`，这相当于 feature maps 每个点都有 `9` 个 anchors，每个 anchor 又都有 `4` 个用于回归的 [d_x(A), d_y(A), d_w(A), d_h(A)] 交换量
+可以看到其 `num_output=36`，即经过该卷积输出图像为 `WxHx36`，在 caffe blob存储为
+`[1, 4x9, H, W]`，这相当于 feature maps 每个点都有 `9` 个 anchors，每个 anchor 
+又都有 `4` 个用于回归的 [d_x(A), d_y(A), d_w(A), d_h(A)] 交换量
 '''
 ```
 
@@ -268,7 +273,11 @@ proposal layer有 `3` 个输入：
  - 对应的 bbox reg 的变换量 `rpn_bbox_pred`
  - `im_info`
 
-另外还有参数 `feat_stride=16`。首先，`im_info`。对于一副任意大小 `PxQ` 图像，传入 Faster RCNN 前首先 reshape 到固定 `MxN`，`im_info=[M, N, scale_factor]` 则保存了此次缩放的所有信息。然后经过 conv layers，经过 `4` 次 pooling 变为 `WxH=(M/16)x(N/16)` 大小，其中 `feature_stride=16` 则保存了该信息，用于计算 anchor 偏移量。
+另外还有参数 `feat_stride=16`。首先，`im_info`。对于一副任意大小 `PxQ` 图像，传入
+Faster RCNN 前首先 reshape 到固定 `MxN`，`im_info=[M, N, scale_factor]` 
+则保存了此次缩放的所有信息。然后经过 conv layers，经过 `4` 次 pooling 变为
+`WxH=(M/16)x(N/16)` 大小，其中 `feature_stride=16` 则保存了该信息，
+用于计算 anchor 偏移量。
 '''
 ```
 
