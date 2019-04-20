@@ -4,7 +4,7 @@
 
 
 
-![](../images/FRNN.png)
+​					![](../images/FRNN.png)
 
 
 
@@ -21,7 +21,7 @@
 
 下图为具体的 Faster R-CNN 网络：
 
-![](../images/FRNN1.png) 
+​	![](../images/FRNN1.png) 
 
 
 
@@ -59,7 +59,7 @@ Faster RCNN 抛弃了传统的滑动窗口（Sliding Window）和 Selective Sear
 
 下图展示了 RPN 网络的具体构成：
 
-![](../images/RPN.png)
+​				![](../images/RPN.png)
 
 
 
@@ -80,7 +80,7 @@ anchors 机制，简而言之，就是针对 feature maps 中的每个位置，�
 
 
 
-![](../images/Anchor.png)
+​								![](../images/Anchor.png)
 
 
 
@@ -92,7 +92,7 @@ anchors 机制，简而言之，就是针对 feature maps 中的每个位置，�
 
 
 
-![](../images/Concrete%20RPN.png)
+​						![](../images/Concrete%20RPN.png)
 
 
 
@@ -104,7 +104,7 @@ anchors 机制，简而言之，就是针对 feature maps 中的每个位置，�
 
 
 
-![](../images/Concrete%20Anchor.png)
+​				![](../images/Concrete%20Anchor.png)
 
 
 
@@ -118,7 +118,7 @@ anchors 机制，简而言之，就是针对 feature maps 中的每个位置，�
 
 
 
-![](../images/Softmax.png)
+​				![](../images/Softmax.png)
 
 
 
@@ -159,7 +159,7 @@ anchors，也就相当于初步提取了检测目标候选区域 box
 
 
 
-![](../images/Ground%20Truth.png)
+​							![](../images/Ground%20Truth.png)
 
 
 
@@ -170,7 +170,7 @@ anchors，也就相当于初步提取了检测目标候选区域 box
 
 
 
-![](../images/box.png)
+​							![](../images/box.png)
 
 那么经过何种变换![](../images/Coordinate4.png)才能从图中的 `A` 变为 `G'` 呢？比较简单的思路就是:
 
@@ -218,7 +218,7 @@ anchors，也就相当于初步提取了检测目标候选区域 box
 
 对于 RPN 网络的下面一条线路而言：
 
-![](../images/RPN%20bottom.png)
+​		![](../images/RPN%20bottom.png)
 
 
 
@@ -320,7 +320,7 @@ RoI pooling 层主要负责收集 proposals，并计算出 proposal feature maps
 
 
 
-![](../images/Crop.png)
+​		![](../images/Crop.png)
 
 
 
@@ -366,7 +366,7 @@ RoI pooling forward 过程为：
 
 这样处理后，即使大小不同的 proposals 输出结果都是 `pooled_w × pooled_h` 固定大小，实现了固定长度输出。
 
-![](../images/Proposals.png)
+​			![](../images/Proposals.png)
 
 
 
@@ -378,7 +378,7 @@ classification 部分利用已经获得的 proposal feature maps，通过 fc lay
 
 分类部分网络结构如下图所示：
 
-![](../images/Classification.png)
+​		![](../images/Classification.png)
 
 从 PoI pooling 获取到 `7x7=49` 大小的 proposal feature maps 后，送入后续网络，接着进行如下两个步骤：
 
