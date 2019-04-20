@@ -76,7 +76,7 @@ Faster RCNN 抛弃了传统的滑动窗口（Sliding Window）和 Selective Sear
 
 ### 2.1  anchors                                                                               
 
-anchors 机制，简而言之，就是针对 feature maps 中的每个位置，生成 `9` 个矩形框，共有 `3` 种形状，长宽比为大约为： `{1:2, 1:1, 2:1}`三种，并将这些矩形框映射回 original images。如下图。实际上通过 anchors 就引入了检测中常用到的多尺度方法。
+anchors 机制，简而言之，就是针对 feature maps 中的每个位置，生成 `9` 个矩形框，共有 `3` 种形状，长宽比为大约为： `{1:2, 1:1, 2:1} `三种，并将这些矩形框映射回 original images。如下图。实际上通过 anchors 就引入了检测中常用到的多尺度方法。
 
 
 
@@ -92,7 +92,7 @@ anchors 机制，简而言之，就是针对 feature maps 中的每个位置，�
 
 
 
-![](../images/Concrete RPN.png)
+![](../images/Concrete%20RPN.png)
 
 
 
@@ -104,7 +104,7 @@ anchors 机制，简而言之，就是针对 feature maps 中的每个位置，�
 
 
 
-![](../images/Concrete Anchor.png)
+![](../images/Concrete%20Anchor.png)
 
 
 
@@ -159,7 +159,7 @@ anchors，也就相当于初步提取了检测目标候选区域 box
 
 
 
-![](../images/Ground Truth.png)
+![](../images/Ground%20Truth.png)
 
 
 
@@ -170,7 +170,7 @@ anchors，也就相当于初步提取了检测目标候选区域 box
 
 
 
-![img](https://pic2.zhimg.com/v2-ea7e6e48662bfa68ec73bdf32f36bb85_b.jpg)
+![](../images/box.png)
 
 那么经过何种变换![](../images/Coordinate4.png)才能从图中的 `A` 变为 `G'` 呢？比较简单的思路就是:
 
@@ -218,7 +218,7 @@ anchors，也就相当于初步提取了检测目标候选区域 box
 
 对于 RPN 网络的下面一条线路而言：
 
-![](../images/RPN bottom.png)
+![](../images/RPN%20bottom.png)
 
 
 
