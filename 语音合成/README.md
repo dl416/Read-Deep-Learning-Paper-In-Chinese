@@ -3,8 +3,11 @@
 
 ## Next:
 [TACOTRON: TOWARDS END-TO-END SPEECH SYNTHESIS][2]
+
 [WaveNet: A Generative Model for Raw Audio][3]
+
 [WaveGlow: A Flow-based Generative Network for Speech Synthesis][4]
+
 [Building a mixed-lingual neural TTS system with only monolingual data][5]
 
 
