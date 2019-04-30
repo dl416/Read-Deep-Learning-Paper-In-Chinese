@@ -146,6 +146,7 @@ class LocationLayer(nn.Module):
 
 ## 解码器：
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20190429212357537.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTQyNTMxNzM=,size_16,color_FFFFFF,t_70)
+
 解码器是一个自回归循环神经网络，它从编码的输入序列预测输出声谱图，一次预测一帧。
 1. 上一步预测出的频谱首先被传入一个“pre-net”，每层由256个隐藏ReLU单元组成的双层全连接层，pre-net作为一个信息瓶颈层（boottleneck）,对于学习注意力是必要的。
 2.  pre-net的输出和注意力上下文向量拼接在一起，传给一个两层堆叠的由1024个单元组成的单向LSTM。LSTM的输出再次和注意力上下文向量拼接在一起，然后经过一个线性投影来预测目标频谱帧。
