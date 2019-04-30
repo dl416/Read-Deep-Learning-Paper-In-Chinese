@@ -1,4 +1,6 @@
-﻿## Reading:
+﻿# Text to Speech:
+
+## Reading:
 [Natural TTS Synthesis by Conditioning WaveNet on Mel Spectrogram Predictions][1]
 
 ## Next:
