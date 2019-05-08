@@ -40,9 +40,10 @@
 
 默认情况下，每个 feature map 会有一个 $a_{r}=1$ ，且尺度为 $s_{k}$ 的先验框。除此之外，还会这是一个尺度为 $s_{k}^{\prime}=\sqrt{S_{k} S_{k+1}}$ 且 $a_{r}=1$ 的先验框。这样，每个 feature map 都设置了两个长宽比（aspect radio）为 `1` 但大小不一样的正方形先验框。先验框的长宽比为：
 $$
-a_{r} \in
-\begin{equation}
-\left\{1,2,3, \frac{1}{2}, \frac{1}{3}\right\}
+a_{r} \in 
+\begin{equation} 
+\left\{1,2,3, \frac{1}{2}, \frac{1}{3}
+\right\} 
 \end{equation}
 $$
 
