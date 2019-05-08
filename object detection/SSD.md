@@ -14,7 +14,7 @@
 
 这样，不同出层次的 feature maps 分别用于预测 default box 所属不同 class 的 score 以及该box的  `offset` ，最后通过 NMS 得到最终的检测结果。
 
-![](..\images\SSD%20Model.png)
+![](../images/SSD%20Model.png)
 
 
 
