@@ -111,12 +111,26 @@ $$
 
 对于 locatization loss，其采用 Smooth L1 loss，定义如下：
 $$
-L_{l o c}(x, l, g)=\sum_{i \in P o s}^{N} \sum_{m \in\{c x, c y, w, h\}} x_{i j}^{k} {smooth}_{\mathrm{L1}}\left(l_{i}^{m}-\hat{g}_{j}^{m}\right)\\
-{\hat{g}_{j}^{c x}=\left(g_{j}^{c x}-d_{i}^{c x}\right) / d_{i}^{w}} \\
-{\hat{g}_{j}^{c y}=\left(g_{j}^{c y}-d_{i}^{c y}\right) / d_{i}^{h}} \\ 
-{\hat{g}_{j}^{w}=\log \left(\frac{g_{j}^{w}}{d_{i}^{w}}\right) \quad \\
-\hat{g}_{j}^{h}=\log \left(\frac{g_{j}^{h}}{d_{i}^{h}}\right)}
+L_{l o c}(x, l, g)=\sum_{i \in P o s}^{N} \sum_{m \in\{c x, c y, w, h\}} x_{i j}^{k} {smooth}_{\mathrm{L1}}\left(l_{i}^{m}-\hat{g}_{j}^{m}\right)
 $$
+
+$$
+\\
+{\hat{g}_{j}^{c x}=\left(g_{j}^{c x}-d_{i}^{c x}\right) / d_{i}^{w}} 
+$$
+
+$$
+{\hat{g}_{j}^{c y}=\left(g_{j}^{c y}-d_{i}^{c y}\right) / d_{i}^{h}}
+$$
+
+$$
+\hat{g}_{j}^{w}=\log \left(\frac{g_{j}^{w}}{d_{i}^{w}}\right)
+$$
+
+$$
+\hat{g}_{j}^{h}=\log \left(\frac{g_{j}^{h}}{d_{i}^{h}}\right)
+$$
+
 
 
 其中， Smooth L1 loss 的定义为：
@@ -138,11 +152,21 @@ $$
 
 
 $$
-\begin{array}{l}{\hat{g}_{j}^{c x}=\left(g_{j}^{c x}-d_{i}^{c x}\right) / d_{i}^{w} / \text {variance}[0]\\
-\hat{g}_{j}^{c y}=\left(g_{j}^{c y}-d_{i}^{c y}\right) / d_{i}^{h} / \text {variance}[1]} \\
-{\hat{g}_{j}^{w}=\log \left(g_{j}^{w} / d_{i}^{w}\right) / \text {variance}[2]\\
-\hat{g}_{j}^{h}=\log \left(g_{j}^{h} / d_{i}^{h}\right) / \text {variance}[3]}\end{array}
+\hat{g}_{j}^{c x}=\left(g_{j}^{c x}-d_{i}^{c x}\right) / d_{i}^{w} / \text {variance}[0]
 $$
+
+$$
+\hat{g}_{j}^{c y}=\left(g_{j}^{c y}-d_{i}^{c y}\right) / d_{i}^{h} / \text {variance}[1]
+$$
+
+$$
+\hat{g}_{j}^{w}=\log \left(g_{j}^{w} / d_{i}^{w}\right) / \text {variance}[2]
+$$
+
+$$
+\hat{g}_{j}^{h}=\log \left(g_{j}^{h} / d_{i}^{h}\right) / \text {variance}[3]
+$$
+
 
 
 #### 2.2.2 confidence loss
@@ -151,8 +175,7 @@ $$
 
 
 $$
-L_{conf}(x, c)=-\sum_{i \in P o s}^{N} x_{i j}^{p} \log \left(\hat{c}_{i}^{p}\right)-\sum_{i \in N e g} \log \left(\hat{c}_{i}^{0}\right) \\
-\quad \text { where } \quad \hat{c}_{i}^{p}=\frac{\exp \left(c_{i}^{p}\right)}{\sum_{p} \exp \left(c_{i}^{p}\right)}
+L_{conf}(x, c)=-\sum_{i \in P o s}^{N} x_{i j}^{p} \log \left(\hat{c}_{i}^{p}\right)-\sum_{i \in N e g} \log \left(\hat{c}_{i}^{0}\right) \quad \text { where } \quad \hat{c}_{i}^{p}=\frac{\exp \left(c_{i}^{p}\right)}{\sum_{p} \exp \left(c_{i}^{p}\right)}
 $$
 
 
