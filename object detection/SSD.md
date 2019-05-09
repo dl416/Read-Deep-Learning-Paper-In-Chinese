@@ -134,7 +134,9 @@ $$
 
 
 
-由于 $x^p_{ij}$ 的存在，所以位置误差仅针对正样本进行计算。值得注意的是，要先对 ground truth 的 $g$ 进行编码得到 $\hat{g}$，因为预测值 $l$ 也是编码值，若设置 `variance_encoded_in_target=True`，编码时要加上 `variance：
+由于 $x^p_{ij}$ 的存在，所以位置误差仅针对正样本进行计算。值得注意的是，要先对 ground truth 的 $g$ 进行编码得到 $\hat{g}$，因为预测值 $l$ 也是编码值，若设置 `variance_encoded_in_target=True`，编码时要加上 `variance`：
+
+
 $$
 \begin{array}{l}{\hat{g}_{j}^{c x}=\left(g_{j}^{c x}-d_{i}^{c x}\right) / d_{i}^{w} / \text {variance}[0]\\
 \hat{g}_{j}^{c y}=\left(g_{j}^{c y}-d_{i}^{c y}\right) / d_{i}^{h} / \text {variance}[1]} \\
@@ -146,6 +148,8 @@ $$
 #### 2.2.2 confidence loss
 
 对于 confidence loss，其采用 softmax loss:
+
+
 $$
 L_{conf}(x, c)=-\sum_{i \in P o s}^{N} x_{i j}^{p} \log \left(\hat{c}_{i}^{p}\right)-\sum_{i \in N e g} \log \left(\hat{c}_{i}^{0}\right) \\
 \quad \text { where } \quad \hat{c}_{i}^{p}=\frac{\exp \left(c_{i}^{p}\right)}{\sum_{p} \exp \left(c_{i}^{p}\right)}
