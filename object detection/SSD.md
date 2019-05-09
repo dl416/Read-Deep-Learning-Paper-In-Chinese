@@ -121,6 +121,8 @@ $$
 
 ![](../images/Smooth%20L1%20Loss.png)
 
+
+
 其中：
 $$
 smooth_{L_{1}}(x)=\left\{\begin{array}{ll}{0.5 x^{2}} & {\text { if }|x|<1} \\ {|x|-0.5} & {\text { otherwise }}\end{array}\right.其中：
@@ -129,7 +131,7 @@ $$
 
 其中：
 
-* $x^p_{ij}\in \{ 1,0 \}$ 为一个指示参数，当  $x^p_{ij}= 1$ 时表示第 $i$ 个默认框与第 $j$ 个 ground truth 匹配，并且 ground truth 的类别为 $p$。
+* $x^p_{ij}\in { 1,0 }$ 为一个指示参数，当  $x^p_{ij}= 1$ 时表示第 $i$ 个默认框与第 $j$ 个 ground truth 匹配，并且 ground truth 的类别为 $p$。
 * $c$为类别置信度预测值。
 * $l$ 为默认框的所对应边界框的位置预测值
 * $g$ 是 ground truth 的位置参数。
