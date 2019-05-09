@@ -39,10 +39,9 @@
 
 
 默认情况下，每个 feature map 会有一个 $a_{r}=1$ ，且尺度为 $s_{k}$ 的默认框。除此之外，还会这是一个尺度为 $s_{k}^{\prime}=\sqrt{S_{k} S_{k+1}}$ 且 $a_{r}=1$ 的默认框。这样，每个 feature map 都设置了两个长宽比（aspect radio）为 `1` 但大小不一样的正方形默认框。默认框的长宽比为：
-$$
-a_{r} \in \left\{ 1,2,3, \frac{1}{2}, \frac{1}{3}
-\right\} 
-$$
+
+![](../images/Aspect%20Ratio.png)
+
 
 
 在设置默认框的尺度时，也是有技巧的。在此论文中，作者采用了一个线性规则，即随着 feature map 的尺寸减小，默认框的尺度线性增加。
@@ -118,7 +117,7 @@ $$
 
 
 
-其中， Smooth L1 loss 的定义为：
+ Smooth L1 loss 的定义为：
 
 ![](../images/Smooth%20L1%20Loss.png)
 
@@ -145,10 +144,8 @@ $$
 
 对于 confidence loss，其采用 softmax loss:
 
+![](../images/Confidence%20Loss.png)
 
-$$
-L_{conf}(x, c)=-\sum_{i \in P o s}^{N} x_{i j}^{p} \log \left(\hat{c}_{i}^{p}\right)-\sum_{i \in N e g} \log \left(\hat{c}_{i}^{0}\right) \quad \text { where } \quad \hat{c}_{i}^{p}=\frac{\exp \left(c_{i}^{p}\right)}{\sum_{p} \exp \left(c_{i}^{p}\right)}
-$$
 
 
 ### 2.3 **Data augmentation：**
@@ -163,8 +160,8 @@ $$
 
 同时在 paper 中还提到：
 
-- 采样的 patch 占原始图像大小比例在 $[0.1,\,1]$之间
-- 采样的 patch 的长宽比在 $[0.5,\,2]$ 之间
+- 采样的 patch 占原始图像大小比例在 $[0.1,1]$之间
+- 采样的 patch 的长宽比在 $[0.5,2]$ 之间
 - 当 ground truth box 中心恰好在采样的 patch 中时，保留整个 ground truth box
 - 最后每个 patch 被 resize 到固定大小，并且以 `0.5` 的概率随机的水平翻转
 
