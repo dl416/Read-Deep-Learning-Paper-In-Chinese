@@ -14,7 +14,7 @@
 
 这样，不同出层次的 feature maps 分别用于预测 default box 所属不同 class 的 score 以及该box的  `offset` ，最后通过 NMS 得到最终的检测结果。
 
-![](../images/SSD%20Model.png)
+![](D:/Software/Entertainment/Onedrive/OneDrive%20-%20stu.scu.edu.cn/%E6%96%87%E6%A1%A3/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/Read-Deep-Learning-Paper-In-Chinese/images/SSD%20Model.png)
 
 
 
@@ -32,9 +32,9 @@
 
 说白了，就是借鉴了 Faster R-CNN 的 anchor 机制。不同 feature map 设置的默认框的数目不同，即：
 
--  `conv4_3` ：`4`（不使用长宽比为 `3`、`1/3` 的默认框）
+- `conv4_3` ：`4`（不使用长宽比为 `3`、`1/3` 的默认框）
 - ` conv7`、 `conv8_2`、 `conv9_2` ：`6`
--  `conv10_2`、 `conv11_2` ：`4`（不使用长宽比为 `3`、`1/3` 的默认框）
+- `conv10_2`、 `conv11_2` ：`4`（不使用长宽比为 `3`、`1/3` 的默认框）
 
 
 
@@ -56,12 +56,11 @@ $$
 $$
 \left\lfloor\frac{\left\lfloor s_{\max } \times 100\right\rfloor-\left\lfloor s_{\min } \times 100\right\rfloor}{m-1}\right\rfloor= 17
 $$
-
 这样，各个 feature map的 $s_{k}$ 为 `20`、`37`、`54`、`71`、`88`、`105`。将这些比例除以 `100`，然后再乘以图片大小，可以得到各个 feature map 的尺度为：`60`、`111`、`162`、`213`、`264`、`315`（对于 TF 在实现时，最小比例  $s_{min}$ 采用 `0.15` 而非 `0.2`）。最后的问题：$30$ 呢? 这就要说到：$s_{1}'=0.5 \times s_{1}$ , 就是 $0.1$，再乘以 $300$，就是 $30$。这样, 便得到 `7` 个数，即 `6` 个区间段，也就是 `6` 组 `min_size` 和 `max_size`。这样，就可以计算每个 feature map 的 anchor box 的尺寸了。
 
 
 
-![](../images/Anchor%20Sizes.png)
+![](D:/Software/Entertainment/Onedrive/OneDrive%20-%20stu.scu.edu.cn/%E6%96%87%E6%A1%A3/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/Read-Deep-Learning-Paper-In-Chinese/images/Anchor%20Sizes.png)
 
 
 
@@ -71,7 +70,7 @@ $$
 
 得到了特征图之后，需要对特征图进行卷积得到检测结果。下图为 `3×3` 大小的 feature map 的检测过程：
 
-![](../images/Feature%20Map.jpg)
+![](D:/Software/Entertainment/Onedrive/OneDrive%20-%20stu.scu.edu.cn/%E6%96%87%E6%A1%A3/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/Read-Deep-Learning-Paper-In-Chinese/images/Feature%20Map.jpg)
 
 
 
@@ -82,14 +81,15 @@ $$
 ## 2. 训练过程
 
 ### 2.1 默认框匹配 
+
 在训练过程中，首先要确定训练图片中的 ground truth 与哪个默认框来进行匹配，与之匹配的默认框所对应的边界框将负责预测它。
 
 
 
 在 YOLO 中，ground truth 的中心落在哪个单元格，该单元格中与其 IoU 最大的边界框负责预测它；而 SSD 的默认框与 ground truth 的匹配原则主要有两点:
 
-* 第一个原则：首先，对于图片中每个 ground truth，找到与其 IoU 最大的默认框，该默认框与其匹配，这样，可以保证每个 ground truth 一定与某个默认框匹配。通常称与 ground truth 匹配的默认框为正样本；反之，若一个默认框没有与任何 ground truth 进行匹配，那么该默认框只能与背景匹配，就是负样本。一个图片中 ground truth 是非常少的， 而默认框却很多，如果仅按第一个原则匹配，很多默认框会是负样本，正负样本极其不平衡，所以需要第二个原则。
-* 第二个原则：对于剩余的未匹配默认框，若某个 ground truth 的 IoU 大于某个阈值（一般是 `0.5`），那么该默认框也与这个 ground truth 进行匹配。这意味着某个 ground truth 可能与多个默认框匹配，这是可以的。但是反过来却不可以，因为一个默认框只能匹配一个 ground truth，如果多个 ground truth 与某个默认框 IoU 大于阈值，那么默认框只与 IoU 最大的那个默认框进行匹配。
+- 第一个原则：首先，对于图片中每个 ground truth，找到与其 IoU 最大的默认框，该默认框与其匹配，这样，可以保证每个 ground truth 一定与某个默认框匹配。通常称与 ground truth 匹配的默认框为正样本；反之，若一个默认框没有与任何 ground truth 进行匹配，那么该默认框只能与背景匹配，就是负样本。一个图片中 ground truth 是非常少的， 而默认框却很多，如果仅按第一个原则匹配，很多默认框会是负样本，正负样本极其不平衡，所以需要第二个原则。
+- 第二个原则：对于剩余的未匹配默认框，若某个 ground truth 的 IoU 大于某个阈值（一般是 `0.5`），那么该默认框也与这个 ground truth 进行匹配。这意味着某个 ground truth 可能与多个默认框匹配，这是可以的。但是反过来却不可以，因为一个默认框只能匹配一个 ground truth，如果多个 ground truth 与某个默认框 IoU 大于阈值，那么默认框只与 IoU 最大的那个默认框进行匹配。
 
 
 
@@ -105,7 +105,7 @@ L(x, c, l, g)=\frac{1}{N}\left(L_{c o n f}(x, c)+\alpha L_{l o c}(x, l, g)\right
 $$
 其中：
 
-* $N$ 是默认框的正样本数量。
+- $N$ 是默认框的正样本数量。
 
 
 
@@ -121,20 +121,12 @@ $$
 
 ![](../images/Smooth%20L1%20Loss.png)
 
-
-
-其中：
-$$
-smooth_{L_{1}}(x)=\left\{\begin{array}{ll}{0.5 x^{2}} & {\text { if }|x|<1} \\ {|x|-0.5} & {\text { otherwise }}\end{array}\right.其中：
-$$
-
-
 其中：
 
-* $x^p_{ij}\in { 1,0 }$ 为一个指示参数，当  $x^p_{ij}= 1$ 时表示第 $i$ 个默认框与第 $j$ 个 ground truth 匹配，并且 ground truth 的类别为 $p$。
-* $c$为类别置信度预测值。
-* $l$ 为默认框的所对应边界框的位置预测值
-* $g$ 是 ground truth 的位置参数。
+- $x^p_{ij}\in { 1,0 }$ 为一个指示参数，当  $x^p_{ij}= 1$ 时表示第 $i$ 个默认框与第 $j$ 个 ground truth 匹配，并且 ground truth 的类别为 $p$。
+- $c$为类别置信度预测值。
+- $l$ 为默认框的所对应边界框的位置预测值
+- $g$ 是 ground truth 的位置参数。
 
 
 
@@ -166,5 +158,10 @@ $$
 - 采样的 patch 的长宽比在 $[0.5,2]$ 之间
 - 当 ground truth box 中心恰好在采样的 patch 中时，保留整个 ground truth box
 - 最后每个 patch 被 resize 到固定大小，并且以 `0.5` 的概率随机的水平翻转
+
+
+
+
+
 
 
