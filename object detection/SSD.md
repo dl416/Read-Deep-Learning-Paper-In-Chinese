@@ -69,7 +69,7 @@ $$
 
 得到了特征图之后，需要对特征图进行卷积得到检测结果。下图为 `3×3` 大小的 feature map 的检测过程：
 
-![](../images/Feature%20map.jpg)
+![](../images/Feature%20Map.jpg)
 
 
 
@@ -117,6 +117,8 @@ L_{l o c}(x, l, g)=\sum_{i \in P o s}^{N} \sum_{m \in\{c x, c y, w, h\}} x_{i j}
 {\hat{g}_{j}^{w}=\log \left(\frac{g_{j}^{w}}{d_{i}^{w}}\right) \quad \\
 \hat{g}_{j}^{h}=\log \left(\frac{g_{j}^{h}}{d_{i}^{h}}\right)}
 $$
+
+
 其中， Smooth L1 loss 的定义为：
 $$
 {smooth}_{L_{1}}(x)=\left\{\begin{array}{ll}{0.5 x^{2}} & {\text { if }|x|<1} \\ {|x|-0.5} & {\text { otherwise }}\end{array}\right.
