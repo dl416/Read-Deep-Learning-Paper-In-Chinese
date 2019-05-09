@@ -53,17 +53,20 @@ $$
 
 
 
-对于第一个 feature map（即 `conv4_3`），其默认框的尺度比例一般设置为 $s_{min}/2=0.1$。那么尺度为 $300\times0.1=30$。对于后面的 feature map，默认框尺度按照公式线性增加，但是先将尺度比例先扩大 `100` 倍，此时增长步长为：
+对于第一个 feature map（即 `conv4_3`），其默认框的尺度比例一般设置为 $s_{min}/2=0.1$。那么尺度为 $300\times0.1=30$。对于后面的 feature map，默认框尺度按照公式线性增加，但是先将尺度比例先扩大 `100` 倍，此时增长步长为（注：需要向下取整，所以与之前的计算公式有所不同）：
 $$
 \left\lfloor\frac{\left\lfloor s_{\max } \times 100\right\rfloor-\left\lfloor s_{\min } \times 100\right\rfloor}{m-1}\right\rfloor= 17
 $$
 
-
-这样，各个 feature map的 $s_{k}$ 为 `20`、`37`、`54`、`71`、`88`。将这些比例除以 `100`，然后再乘以图片大小，可以得到各个 feature map 的尺度为：`30`、`60`、`111`、`162`、`213`、`264`（对于 TF 在实现时，最小比例  $s_{min}$ 采用 `0.15` 而非 `0.2`）。【注意】：最后一个 feature map 需要参考一个虚拟的 $s_{m+1}=300 \times105/100=315$ 来计算 $s'_{m}$。
-
+这样，各个 feature map的 $s_{k}$ 为 `20`、`37`、`54`、`71`、`88`、`105`。将这些比例除以 `100`，然后再乘以图片大小，可以得到各个 feature map 的尺度为：`60`、`111`、`162`、`213`、`264`、`315`（对于 TF 在实现时，最小比例  $s_{min}$ 采用 `0.15` 而非 `0.2`）。最后的问题：$30$ 呢? 这就要说到：$s_{1}'=0.5 \times s_{1}$ , 就是 $0.1$，再乘以 $300$，就是 $30$。这样, 便得到 `7` 个数，即 `6` 个区间段，也就是 `6` 组 `min_size` 和 `max_size`。这样，就可以计算每个 feature map 的 anchor box 的尺寸了。
 
 
-每个单元的默认框的中心点分布在各个单元的中心，即 $\frac{i+0.5}{|f_k|},\frac{j+0.5}{|f_k|}),i,j\in[0, |f_k|)$，其中 $|f_k|$ 为特征图的大小。
+
+![](../images/Anchor%20Sizes.png)
+
+
+
+每个默认框中心设定为 $\frac{i+0.5}{|f_k|},\frac{j+0.5}{|f_k|}) \quad i,j\in[0, |f_k|)$，其中 $|f_k|$ 为特征图的大小。
 
 
 
@@ -107,35 +110,21 @@ $$
 
 
 
-#### 2.2.1 locatization loss
+#### 2.2.1 localization loss
 
 对于 locatization loss，其采用 Smooth L1 loss，定义如下：
-$$
-L_{l o c}(x, l, g)=\sum_{i \in P o s}^{N} \sum_{m \in\{c x, c y, w, h\}} x_{i j}^{k} {smooth}_{\mathrm{L1}}\left(l_{i}^{m}-\hat{g}_{j}^{m}\right)
-$$
 
-$$
-\\
-{\hat{g}_{j}^{c x}=\left(g_{j}^{c x}-d_{i}^{c x}\right) / d_{i}^{w}} 
-$$
-
-$$
-{\hat{g}_{j}^{c y}=\left(g_{j}^{c y}-d_{i}^{c y}\right) / d_{i}^{h}}
-$$
-
-$$
-\hat{g}_{j}^{w}=\log \left(\frac{g_{j}^{w}}{d_{i}^{w}}\right)
-$$
-
-$$
-\hat{g}_{j}^{h}=\log \left(\frac{g_{j}^{h}}{d_{i}^{h}}\right)
-$$
+![](../images/Localization%20Loss.png)
 
 
 
 其中， Smooth L1 loss 的定义为：
+
+![](../images/Smooth%20L1%20Loss.png)
+
+其中：
 $$
-smooth_{L_{1}}(x)=\left\{\begin{array}{ll}{0.5 x^{2}} & {\text { if }|x|<1} \\ {|x|-0.5} & {\text { otherwise }}\end{array}\right.
+smooth_{L_{1}}(x)=\left\{\begin{array}{ll}{0.5 x^{2}} & {\text { if }|x|<1} \\ {|x|-0.5} & {\text { otherwise }}\end{array}\right.其中：
 $$
 
 
@@ -150,24 +139,7 @@ $$
 
 由于 $x^p_{ij}$ 的存在，所以位置误差仅针对正样本进行计算。值得注意的是，要先对 ground truth 的 $g$ 进行编码得到 $\hat{g}$，因为预测值 $l$ 也是编码值，若设置 `variance_encoded_in_target=True`，编码时要加上 `variance`：
 
-
-$$
-\hat{g}_{j}^{c x}=\left(g_{j}^{c x}-d_{i}^{c x}\right) / d_{i}^{w} / \text {variance}[0]
-$$
-
-$$
-\hat{g}_{j}^{c y}=\left(g_{j}^{c y}-d_{i}^{c y}\right) / d_{i}^{h} / \text {variance}[1]
-$$
-
-$$
-\hat{g}_{j}^{w}=\log \left(g_{j}^{w} / d_{i}^{w}\right) / \text {variance}[2]
-$$
-
-$$
-\hat{g}_{j}^{h}=\log \left(g_{j}^{h} / d_{i}^{h}\right) / \text {variance}[3]
-$$
-
-
+![](../images/Variance%20Transform.png)
 
 #### 2.2.2 confidence loss
 
@@ -195,6 +167,5 @@ $$
 - 采样的 patch 的长宽比在 $[0.5,\,2]$ 之间
 - 当 ground truth box 中心恰好在采样的 patch 中时，保留整个 ground truth box
 - 最后每个 patch 被 resize 到固定大小，并且以 `0.5` 的概率随机的水平翻转
-
 
 
