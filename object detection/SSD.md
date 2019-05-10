@@ -8,7 +8,7 @@
 
 
 
-在 SSD 中， 采用 VGG16 作为 backbone（当然你也可以采用其他经典的网络），使用前面的 `5` 层，然后利用 atrous convolution（即空洞卷积），将 `fc6` 和 `fc7` 这两个 fc layers 转换为 conv layers，然后再额外地增加 `3` 个 conv layers 和 `1` 个 GAP layer（全局平均池化层）。
+在 SSD 中， 采用 VGG16 作为 backbone（当然你也可以采用其他经典的网络），使用前面的 `13` 层，然后利用 atrous convolution（即空洞卷积），将 `fc6` 和 `fc7` 这两个 fc layers 转换为 conv layers，然后再额外地增加 `3` 个 conv layers 和 `1` 个 GAP layer（全局平均池化层）。
 
 
 
